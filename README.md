@@ -1,4 +1,4 @@
-# Human Text Studio
+# MSCSL Text Studio
 
 AI가 작성한 듯한 한국어와 영어 문서를 더 자연스러운 문체로 다듬는 정적 웹앱입니다.
 
