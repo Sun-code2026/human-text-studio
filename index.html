@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Human Text Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Korean writing editor</p>
+          <h1>Human Text Studio</h1>
+          <p>
+            AI가 쓴 듯한 문장을 더 자연스럽고, 덜 과장되고, 읽는 사람에게 맞는
+            한국어 문체로 다듬습니다.
+          </p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="paper-stack">
+            <div class="paper paper-back"></div>
+            <div class="paper paper-front">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="문서 인간화 작업 영역">
+        <aside class="controls">
+          <div class="control-group">
+            <label for="tone">톤</label>
+            <select id="tone">
+              <option value="natural">자연스러운 문서</option>
+              <option value="business">비즈니스</option>
+              <option value="essay">에세이</option>
+              <option value="casual">캐주얼</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="strength">인간화 강도 <strong id="strengthValue">65</strong></label>
+            <input id="strength" type="range" min="20" max="100" value="65" />
+          </div>
+
+          <div class="control-group checks">
+            <label>
+              <input id="reduceBuzzwords" type="checkbox" checked />
+              과한 표현 줄이기
+            </label>
+            <label>
+              <input id="varySentences" type="checkbox" checked />
+              문장 리듬 바꾸기
+            </label>
+            <label>
+              <input id="addHumanTouch" type="checkbox" checked />
+              사람 말투의 연결감 추가
+            </label>
+          </div>
+
+          <div class="stats">
+            <div>
+              <span>입력</span>
+              <strong id="inputCount">0자</strong>
+            </div>
+            <div>
+              <span>출력</span>
+              <strong id="outputCount">0자</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="editor-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>원문</h2>
+              <button id="sampleBtn" type="button">예시</button>
+            </div>
+            <textarea
+              id="sourceText"
+              spellcheck="true"
+              placeholder="AI가 작성한 문서나 문단을 여기에 붙여넣으세요."
+            ></textarea>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>수정본</h2>
+              <button id="copyBtn" type="button">복사</button>
+            </div>
+            <textarea
+              id="resultText"
+              spellcheck="true"
+              placeholder="수정된 문장이 여기에 표시됩니다."
+            ></textarea>
+          </div>
+        </section>
+      </section>
+
+      <section class="detector-strip" aria-label="AI 탐지 사이트 확인">
+        <div class="detector-head">
+          <div>
+            <h2>AI 탐지 사이트 확인</h2>
+            <p>수정본을 복사한 뒤 각 사이트에서 직접 붙여넣어 점수를 비교하세요.</p>
+          </div>
+          <button id="copyForCheckBtn" type="button">검사용 복사</button>
+        </div>
+
+        <div class="auto-detector">
+          <div class="score-box">
+            <span>자동 탐지 점수</span>
+            <strong id="autoScore">0%</strong>
+            <em id="autoLabel">문서 대기 중</em>
+          </div>
+          <div class="meter" aria-hidden="true">
+            <span id="autoMeter"></span>
+          </div>
+          <div class="signal-list">
+            <h3>탐지 신호</h3>
+            <ul id="signalList">
+              <li>문서를 입력하거나 수정본을 만들면 자동으로 분석합니다.</li>
+            </ul>
+          </div>
+          <div class="sentence-flags">
+            <h3>문장별 표시</h3>
+            <div id="sentenceFlags">아직 분석할 문장이 없습니다.</div>
+          </div>
+        </div>
+
+        <div class="detector-grid">
+          <article class="detector-card">
+            <span>GPTZero</span>
+            <button class="detector-open" type="button" data-url="https://www.gptzero.app/">
+              열기
+            </button>
+          </article>
+          <article class="detector-card">
+            <span>Originality.ai</span>
+            <button class="detector-open" type="button" data-url="https://originality.ai/">
+              열기
+            </button>
+          </article>
+          <article class="detector-card">
+            <span>Scribbr</span>
+            <button class="detector-open" type="button" data-url="https://www.scribbr.com/ai-detector/">
+              열기
+            </button>
+          </article>
+          <article class="detector-card">
+            <span>QuillBot</span>
+            <button class="detector-open" type="button" data-url="https://quillbot.com/ai-content-detector">
+              열기
+            </button>
+          </article>
+          <article class="detector-card detector-card-muted">
+            <span>OpenAI</span>
+            <small>공식 AI Text Classifier는 중단됨</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-strip" aria-label="수정 요약">
+        <div>
+          <h2>수정 요약</h2>
+          <p id="summaryText">문서를 입력하면 바뀐 표현과 문장 흐름을 요약합니다.</p>
+        </div>
+        <button id="humanizeBtn" type="button">문체 다듬기</button>
+      </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
